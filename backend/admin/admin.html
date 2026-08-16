@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        NRS Admin Dashboard
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="admin.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <span>
+                NRS
+            </span>
+
+            <h2>
+                New Rajasthan Studio
+            </h2>
+
+            <small>
+                Admin Panel
+            </small>
+
+        </div>
+
+
+        <nav>
+
+            <button
+                class="nav-btn active"
+                onclick="showDashboard()"
+            >
+                Dashboard
+            </button>
+
+
+            <button
+                class="nav-btn"
+                onclick="showBookings()"
+            >
+                Bookings
+            </button>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <p>
+                Admin System
+            </p>
+
+            <small>
+                New Rajasthan Studio
+            </small>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main class="main">
+
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    Admin Dashboard
+                </h1>
+
+                <p>
+                    Manage your studio bookings
+                </p>
+
+            </div>
+
+<button
+    onclick="logoutAdmin()"
+    class="logout-btn"
+>
+    Logout
+</button>
+            <div class="admin-user">
+
+                <span>
+                    ●
+                </span>
+
+                Admin
+
+            </div>
+
+        </header>
+        <div class="booking-filters">
+
+    <input
+        type="text"
+        id="searchBooking"
+        placeholder="Search customer or phone..."
+    >
+
+
+    <select id="statusFilter">
+
+        <option value="all">
+            All Status
+        </option>
+
+        <option value="Pending">
+            Pending
+        </option>
+
+        <option value="Confirmed">
+            Confirmed
+        </option>
+
+        <option value="Cancelled">
+            Cancelled
+        </option>
+
+    </select>
+
+
+    <select id="serviceFilter">
+
+        <option value="all">
+            All Services
+        </option>
+
+        <option value="Wedding Photography">
+            Wedding Photography
+        </option>
+
+        <option value="Pre Wedding">
+            Pre Wedding
+        </option>
+
+        <option value="Cinematic Film">
+            Cinematic Film
+        </option>
+
+        <option value="Drone Shoot">
+            Drone Shoot
+        </option>
+
+    </select>
+
+</div>
+
+
+
+        <!-- =========================
+             DASHBOARD
+        ========================== -->
+
+        <section
+            id="dashboardSection"
+            class="dashboard-section"
+        >
+
+
+            <!-- STAT CARDS -->
+
+            <div class="stats-grid">
+
+
+                <div class="stat-card">
+
+                    <div>
+
+                        <p>
+                            Total Bookings
+                        </p>
+
+                        <h2 id="totalBookings">
+                            0
+                        </h2>
+
+                    </div>
+
+                    <span class="stat-icon">
+                        📋
+                    </span>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <div>
+
+                        <p>
+                            Pending
+                        </p>
+
+                        <h2 id="pendingBookings">
+                            0
+                        </h2>
+
+                    </div>
+
+                    <span class="stat-icon">
+                        ⏳
+                    </span>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <div>
+
+                        <p>
+                            Confirmed
+                        </p>
+
+                        <h2 id="confirmedBookings">
+                            0
+                        </h2>
+
+                    </div>
+
+                    <span class="stat-icon">
+                        ✓
+                    </span>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <div>
+
+                        <p>
+                            Cancelled
+                        </p>
+
+                        <h2 id="cancelledBookings">
+                            0
+                        </h2>
+
+                    </div>
+
+                    <span class="stat-icon">
+                        ×
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- RECENT BOOKINGS -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>
+                            Recent Bookings
+                        </h2>
+
+                        <p>
+                            Latest customer requests
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        onclick="loadBookings()"
+                        class="refresh-btn"
+                    >
+                        ↻ Refresh
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="recentBookings"
+                    class="booking-list"
+                >
+
+                    <p class="loading">
+                        Loading bookings...
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================
+             BOOKINGS SECTION
+        ========================== -->
+
+        <section
+            id="bookingsSection"
+            class="bookings-section"
+            style="display:none;"
+        >
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>
+                            All Bookings
+                        </h2>
+
+                        <p>
+                            Manage customer bookings
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        onclick="loadBookings()"
+                        class="refresh-btn"
+                    >
+                        ↻ Refresh
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="allBookings"
+                    class="booking-list"
+                >
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <script src="admin.js"></script>
+
+</body>
+
+</html>
