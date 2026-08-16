@@ -11,7 +11,7 @@ const path = require("path");
 
 const app = express();
 
-const PORT = 3000;
+
 /* =========================
    WHATSAPP MESSAGE
 ========================= */
@@ -77,6 +77,7 @@ app.use(express.json());
 app.use(cors());
 
 
+app.use(express.static(path.join(__dirname, "public")));
 /* =========================
    BOOKING FILE
 ========================= */
